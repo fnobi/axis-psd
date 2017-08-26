@@ -3,9 +3,10 @@ const _ = require('lodash');
 
 const exportJSON = require('./lib/exportJSON');
 const exportCSS = require('./lib/exportCSS');
+const exportPug = require('./lib/exportPug');
 const CONFIG = require('./CONFIG');
 
-const FORMAT_LIST = [ 'css', 'json' ];
+const FORMAT_LIST = [ 'css', 'pug', 'json' ];
 
 function init () {
     const opts = parseOptions();
@@ -28,6 +29,10 @@ function parseOptions () {
               .string('indent')
               .default('indent', 4)
               .describe('indent', 'file indent length')
+    
+              .string('ratio')
+              .default('ratio', 1)
+              .describe('ratio', 'image size ratio')
 
               .string('image-dir')
               .describe('image-dir', 'image location (prefix)')
@@ -52,8 +57,13 @@ function parseOptions () {
     }
     const indent = Number(argv.indent);
 
+    if (isNaN(argv.ratio)) {
+        throw new Error(`ratio "${argv.ratio}" is NaN.`);
+    }
+    const ratio = Number(argv.ratio);
+
     return {
-        filePath, format, indent,
+        filePath, format, indent, ratio,
         imageDir: argv['image-dir'],
         sassImageFunction: argv['sass-image-function']
     };
@@ -84,6 +94,8 @@ function createOutput (layers, opts) {
     switch (opts.format) {
     case 'css':
         return exportCSS(layers, opts);
+    case 'pug':
+        return exportPug(layers, opts);
     default:
         return exportJSON(layers);
     }
