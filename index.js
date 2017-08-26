@@ -1,5 +1,6 @@
 const PSD = require('psd');
 const _ = require('lodash');
+const optimist = require('optimist');
 
 const exportJSON = require('./lib/exportJSON');
 const exportCSS = require('./lib/exportCSS');
@@ -21,35 +22,35 @@ function init () {
 }
 
 function parseOptions () {
-    const argv = require('optimist')
-              .string('f')
-              .alias('f', 'format')
-              .default('format', 'json')
-              .describe('f', 'export format')
+    const argv = optimist.options('format', {
+        alias: 'f',
+        default: 'json',
+        describe: 'export format'
+    }).options('help', {
+        alias: 'h',
+        describe: 'show this help'
+    }).options('indent', {
+        default: 4,
+        describe: 'file indent length'
+    }).options('ratio', {
+        default: 1,
+        describe: 'image size ratio'
+    }).options('image-dir', {
+        describe: 'image location (prefix)'
+    }).options('base-selector', {
+        default: '.layer',
+        describe: 'selector name for layer dom'
+    }).options('name-attr', {
+        default: 'data-layer',
+        describe: 'attribute for image basename'
+    }).options('sass-image-function', {
+        describe: 'function name for expand image path'
+    }).argv;
 
-              .string('indent')
-              .default('indent', 4)
-              .describe('indent', 'file indent length')
-    
-              .string('ratio')
-              .default('ratio', 1)
-              .describe('ratio', 'image size ratio')
-
-              .string('image-dir')
-              .describe('image-dir', 'image location (prefix)')
-    
-              .string('base-selector')
-              .default('base-selector', '.layer')
-              .describe('base-selector', 'selector name for layer dom')
-    
-              .string('name-attr')
-              .default('name-attr', 'data-layer')
-              .describe('name-attr', 'attribute for image basename')
-    
-              .string('sass-image-function')
-              .describe('sass-image-function', 'function name for expand image path')
-
-              .argv;
+    if (argv.help) {
+        optimist.showHelp();
+        process.exit();
+    }
 
     const filePath = argv._.shift();
     if (!filePath) {
