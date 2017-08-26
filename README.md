@@ -98,25 +98,4 @@ $ axis-psd --ratio 0.5 --format css --image-dir assets/ --sass-image-function im
     height: 156.5px;
     background-image: image-url("assets/baloon2-1.png");
 }
-&[data-layer="baloon2-2"] {
-    left: 11.5px;
-    top: 455px;
-    width: 118.5px;
-    height: 133.5px;
-    background-image: image-url("assets/baloon2-2.png");
-}
-&[data-layer="koma3"] {
-    left: 14.5px;
-    top: 593px;
-    width: 346px;
-    height: 85.5px;
-    background-image: image-url("assets/koma3.png");
-}
-&[data-layer="koma4"] {
-    left: 14.5px;
-    top: 692.5px;
-    width: 346px;
-    height: 190.5px;
-    background-image: image-url("assets/koma4.png");
-}
 ```
