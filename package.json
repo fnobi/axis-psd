@@ -1,0 +1,13 @@
+{
+  "name": "axis-psd",
+  "version": "1.0.0",
+  "description": "export psd data positions.",
+  "main": "index.js",
+  "bin": "bin/axis-psd",
+  "author": "Fujisawa Shin",
+  "license": "MIT",
+  "dependencies": {
+    "optimist": "^0.6.1",
+    "psd": "^3.2.0"
+  }
+}
