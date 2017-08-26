@@ -29,6 +29,12 @@ function parseOptions () {
               .default('indent', 4)
               .describe('indent', 'file indent length')
 
+              .string('image-dir')
+              .describe('image-dir', 'image location (prefix)')
+    
+              .string('sass-image-function')
+              .describe('sass-image-function', 'function name for expand image path')
+
               .argv;
 
     const filePath = argv._.shift();
@@ -47,7 +53,9 @@ function parseOptions () {
     const indent = Number(argv.indent);
 
     return {
-        filePath, format, indent
+        filePath, format, indent,
+        imageDir: argv['image-dir'],
+        sassImageFunction: argv['sass-image-function']
     };
 }
 
