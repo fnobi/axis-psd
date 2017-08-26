@@ -24,6 +24,7 @@ function parseOptions () {
     const argv = require('optimist')
               .string('f')
               .alias('f', 'format')
+              .default('format', 'json')
               .describe('f', 'export format')
 
               .string('indent')
