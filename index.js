@@ -37,6 +37,14 @@ function parseOptions () {
               .string('image-dir')
               .describe('image-dir', 'image location (prefix)')
     
+              .string('base-selector')
+              .default('base-selector', '.layer')
+              .describe('base-selector', 'selector name for layer dom')
+    
+              .string('name-attr')
+              .default('name-attr', 'data-layer')
+              .describe('name-attr', 'attribute for image basename')
+    
               .string('sass-image-function')
               .describe('sass-image-function', 'function name for expand image path')
 
@@ -65,6 +73,8 @@ function parseOptions () {
     return {
         filePath, format, indent, ratio,
         imageDir: argv['image-dir'],
+        baseSelector: argv['base-selector'],
+        nameAttr: argv['name-attr'],
         sassImageFunction: argv['sass-image-function']
     };
 }
