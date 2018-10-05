@@ -1,5 +1,5 @@
 {
-  "name": "axis-psd",
+  "name": "@fnobi/axis-psd",
   "version": "1.0.1",
   "description": "export psd data positions.",
   "main": "index.js",
