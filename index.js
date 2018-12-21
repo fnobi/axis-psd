@@ -11,7 +11,7 @@ const FORMAT_LIST = [ 'css', 'pug', 'json' ];
 
 function init () {
     const opts = parseOptions();
-    
+
     PSD.open(opts.filePath).then((psd) => {
         const tree = psd.tree().export();
         const layers = filterLayers(tree);
@@ -84,14 +84,16 @@ function parseOptions () {
 function filterLayers (layer) {
     const array = [];
     if (layer.name && CONFIG.IMAGE_EXT.test(layer.name)) {
+        // TODO: groupのなかにmask付きレイヤーが居たりした場合、マスクを考慮したサイズで出力されないという既知のバグ
+        const params = Object.assign({}, layer, layer.mask);
         array.push({
-            name: layer.name,
-            width: layer.width,
-            height: layer.height,
-            top: layer.top,
-            left: layer.left,
-            right: layer.right,
-            bottom: layer.bottom
+            name: params.name,
+            width: params.width,
+            height: params.height,
+            top: params.top,
+            left: params.left,
+            right: params.right,
+            bottom: params.bottom
         });
     }
     if (layer.children) {
