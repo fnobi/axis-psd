@@ -1,19 +1,15 @@
 const PSD = require('psd');
 const _ = require('lodash');
 
-const exportJSON = require('./lib/exportJSON');
 const exportCSS = require('./lib/exportCSS');
 const exportPug = require('./lib/exportPug');
 const CONFIG = require('./CONFIG');
 
-function axisPsd (opts) {
-    return PSD.open(opts.filePath).then((psd) => {
-        const tree = psd.tree().export();
-        const layers = filterLayers(tree);
-
-        const output = createOutput(layers, opts);
-        console.log(output);
-    });
+async function axisPsd (opts) {
+    const psd = await PSD.open(opts.filePath);
+    const tree = psd.tree().export();
+    const layers = filterLayers(tree);
+    return createOutput(layers, opts);
 }
 
 function filterLayers (layer) {
@@ -42,11 +38,20 @@ function filterLayers (layer) {
 function createOutput (layers, opts) {
     switch (opts.format) {
     case 'css':
-        return exportCSS(layers, opts);
+        return {
+            type: 'css',
+            css: exportCSS(layers, opts)
+        };
     case 'pug':
-        return exportPug(layers, opts);
+        return {
+            type: 'pug',
+            pug: exportPug(layers, opts)
+        };
     default:
-        return exportJSON(layers);
+        return {
+            type: 'layers',
+            layers
+        };
     }
 }
 
