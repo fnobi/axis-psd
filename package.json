@@ -8,7 +8,7 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.4",
-    "optimist": "^0.6.1",
-    "psd": "^3.2.0"
+    "psd": "^3.2.0",
+    "yargs": "^17.4.1"
   }
 }
