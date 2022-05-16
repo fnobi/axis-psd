@@ -9,7 +9,10 @@ async function axisPsd (opts) {
     const psd = await PSD.open(opts.filePath);
     const tree = psd.tree().export();
     const layers = filterLayers(tree);
-    return createOutput(layers, opts);
+    return createOutput(layers, opts, {
+        cols: psd.header.cols,
+        rows: psd.header.rows
+    });
 }
 
 function filterLayers (layer) {
@@ -35,7 +38,7 @@ function filterLayers (layer) {
     return _.flatten(array);
 }
 
-function createOutput (layers, opts) {
+function createOutput (layers, opts, meta) {
     switch (opts.format) {
     case 'css':
         return {
@@ -50,7 +53,8 @@ function createOutput (layers, opts) {
     default:
         return {
             type: 'layers',
-            layers
+            layers,
+            meta
         };
     }
 }
